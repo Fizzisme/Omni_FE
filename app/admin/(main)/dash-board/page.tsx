@@ -26,9 +26,9 @@ export default async function AdminDashboard({
     const monthParam = params?.month;
     const orders = await getOrders().then((res) => res.data);
     const totalOrders = orders.length;
-    const highRisk = orders.filter(o => o.aiAnalyst.risk === 'HIGH').length;
-    const mediumRisk = orders.filter(o => o.aiAnalyst.risk === 'MEDIUM').length;
-    const lowRisk = orders.filter(o => o.aiAnalyst.risk === 'LOW').length;
+    const highRisk = orders.filter((o: any) => o.aiAnalyst.risk === 'HIGH').length;
+    const mediumRisk = orders.filter((o: any) => o.aiAnalyst.risk === 'MEDIUM').length;
+    const lowRisk = orders.filter((o: any) => o.aiAnalyst.risk === 'LOW').length;
 
 
     return (
@@ -88,7 +88,7 @@ export default async function AdminDashboard({
                         </tr>
                         </thead>
                         <tbody>
-                        {orders.map((o) => (
+                        {orders.map((o: any) => (
                             <tr key={o._id} className="border-b hover:bg-gray-50">
 
                                 <td className="p-0">
