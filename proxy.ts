@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import {BE_URL} from "@/lib/constants";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const token = request.cookies.get("access_token_admin")?.value;
 
     if (!token) {
