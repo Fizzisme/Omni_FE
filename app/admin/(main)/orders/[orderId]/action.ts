@@ -2,6 +2,7 @@
 
 import { cookies } from "next/headers";
 import {revalidatePath} from "next/cache";
+import {BE_URL} from "@/lib/constants";
 
 export async function updateOrderStatus(id: string, status: string) {
     try {
@@ -16,7 +17,7 @@ export async function updateOrderStatus(id: string, status: string) {
             };
         }
 
-        const res = await fetch(`http://localhost:8017/v1/admins/orders/${id}`, {
+        const res = await fetch(`${BE_URL}/v1/admins/orders/${id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json",

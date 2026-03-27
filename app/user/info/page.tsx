@@ -1,13 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import {BE_URL} from "@/lib/constants";
 
 export default function UserInfoPage() {
     const [user, setUser] = useState<any>(null);
     const [editing, setEditing] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:8017/v1/users/me', {
+        fetch(`${BE_URL}/v1/users/me`, {
             credentials: 'include',
         })
             .then(res => res.json())
@@ -15,7 +16,7 @@ export default function UserInfoPage() {
     }, []);
 
     const handleUpdate = async () => {
-        await fetch('http://localhost:8017/v1/users/', {
+        await fetch(`${BE_URL}/v1/users/`, {
             method: 'PATCH',
             credentials: 'include',
             headers: {

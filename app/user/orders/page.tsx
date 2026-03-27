@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { cookies } from 'next/headers';
+import {BE_URL} from "@/lib/constants";
 
 async function getOrders() {
 
@@ -12,7 +13,7 @@ async function getOrders() {
         };
     }
 
-    const res = await fetch('http://localhost:8017/v1/users/my-orders', {
+    const res = await fetch(`${BE_URL}/v1/users/my-orders`, {
         headers: {
             Authorization: `Bearer ${accessToken}`,
         },

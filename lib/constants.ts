@@ -1,0 +1,1 @@
+export const BE_URL = 'https://omni-be.onrender.com'

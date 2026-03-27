@@ -1,9 +1,10 @@
 'use server'
 import {cookies} from "next/headers";
+import {BE_URL} from "@/lib/constants";
 
 export async function signInAction(email: string, password: string) {
     try {
-        const res = await fetch("http://localhost:8017/v1/auth/sign-in", {
+        const res = await fetch(`${BE_URL}/v1/auth/sign-in`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

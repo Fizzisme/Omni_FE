@@ -3,6 +3,7 @@
 import Image from "next/image";
 import {updateOrderStatus} from "@/app/admin/(main)/orders/[orderId]/action";
 import {cookies} from "next/headers";
+import {BE_URL} from "@/lib/constants";
 
 async function getOrder(id: string) {
     const cookieStore = await cookies();
@@ -13,7 +14,7 @@ async function getOrder(id: string) {
             error: "No access token",
         };
     }
-    const res = await fetch(`http://localhost:8017/v1/users/my-orders/${id}`, {
+    const res = await fetch(`${BE_URL}/v1/users/my-orders/${id}`, {
         cache: "no-store",
         headers: {
             Authorization: `Bearer ${accessToken}`,

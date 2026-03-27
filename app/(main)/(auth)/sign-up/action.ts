@@ -1,9 +1,10 @@
 'use server'
 import { cookies } from "next/headers";
+import {BE_URL} from "@/lib/constants";
 
 export async function sendVerifyCodeAction(email: string) {
     try {
-        const res = await fetch("http://localhost:8017/v1/auth/send-verify-code", {
+        const res = await fetch(`${BE_URL}/v1/auth/send-verify-code`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email }),
@@ -59,7 +60,7 @@ export async function verifyCodeAction(code: string) {
         }
 
 
-        const res = await fetch("http://localhost:8017/v1/auth/verify-code", {
+        const res = await fetch(`${BE_URL}/v1/auth/verify-code`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -99,7 +100,7 @@ export async function signUpAction(password: string) {
             };
         }
 
-        const res = await fetch("http://localhost:8017/v1/auth/sign-up", {
+        const res = await fetch(`${BE_URL}/v1/auth/sign-up`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

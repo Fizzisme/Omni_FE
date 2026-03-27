@@ -1,8 +1,10 @@
 'use server'
 
 
+import {BE_URL} from "@/lib/constants";
+
 export async function createOrder(data: any) {
-    const res = await fetch('http://localhost:8017/v1/orders', {
+    const res = await fetch(`${BE_URL}/v1/orders`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

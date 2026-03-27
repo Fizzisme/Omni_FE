@@ -2,8 +2,9 @@ import { ShoppingCart, AlertTriangle } from 'lucide-react';
 import Link from "next/link";
 import RevenueSection from "@/app/admin/(main)/dash-board/RevenueSection/RevenueSection";
 import RiskPieChart from "@/app/admin/(main)/dash-board/RiskPieChart/RiskPieChart";
+import {BE_URL} from "@/lib/constants";
 const getOrders = async () => {
-    const res = await fetch(`http://localhost:8017/v1/orders`, {
+    const res = await fetch(`${BE_URL}/v1/orders`, {
         cache: "no-store",
     });
 

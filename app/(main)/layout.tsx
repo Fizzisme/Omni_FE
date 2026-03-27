@@ -1,7 +1,8 @@
 import Header from "@/components/Header/Header";
+import {BE_URL} from "@/lib/constants";
 
 const getCategories = async () => {
-    const res = await fetch(`http://localhost:8017/v1/categories`, {
+    const res = await fetch(`${BE_URL}/v1/categories`, {
         cache: "no-store",
     });
 

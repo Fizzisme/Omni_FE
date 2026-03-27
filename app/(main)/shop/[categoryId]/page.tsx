@@ -1,11 +1,12 @@
 import ProductCard, {IProducts} from '@/components/ProductCard/ProductCard';
+import {BE_URL} from "@/lib/constants";
 
 interface Props {
     params: Promise<{ categoryId: string }>;
 }
 
 export async function getProductsByCategory(categoryId: string) {
-    const res = await fetch(`http://localhost:8017/v1/products/${categoryId}`, {
+    const res = await fetch(`${BE_URL}/v1/products/${categoryId}`, {
         cache: "no-store",
     });
 
@@ -17,7 +18,7 @@ export async function getProductsByCategory(categoryId: string) {
 }
 
 export async function getCategoryBySlug(slug: string) {
-    const res = await fetch(`http://localhost:8017/v1/categories/${slug}`, {
+    const res = await fetch(`${BE_URL}/v1/categories/${slug}`, {
         cache: "no-store",
     })
     if (!res.ok) {

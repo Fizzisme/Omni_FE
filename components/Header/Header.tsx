@@ -14,6 +14,7 @@ import {
     NavigationMenuTrigger,
 } from '@/components/ui/navigation-menu';
 import Link from 'next/link';
+import {BE_URL} from "@/lib/constants";
 
 interface ICategories{
     _id: string;
@@ -27,7 +28,7 @@ export default function Header({categories}:{categories: ICategories[]}) {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:8017/v1/users/me', {
+        fetch(`${BE_URL}/v1/users/me`, {
             method: 'GET',
             credentials: 'include',
         })

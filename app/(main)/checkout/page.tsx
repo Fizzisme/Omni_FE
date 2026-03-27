@@ -3,6 +3,7 @@
 import {CSSProperties, useEffect, useState} from "react";
 import {createOrder} from "@/app/(main)/checkout/action";
 import { useRouter } from "next/navigation";
+import {BE_URL} from "@/lib/constants";
 
 const s: Record<string, CSSProperties> = {
   page: {
@@ -294,7 +295,7 @@ export default function CheckOutPage() {
 
 
   useEffect(() => {
-    fetch('http://localhost:8017/v1/users/me', {
+    fetch(`${BE_URL}/v1/users/me`, {
       credentials: 'include',
     })
         .then(res => {

@@ -1,5 +1,6 @@
 'use server'
 import {cookies} from "next/headers";
+import {BE_URL} from "@/lib/constants";
 
 export const getRevenue = async (month: number) => {
    try{
@@ -11,7 +12,7 @@ export const getRevenue = async (month: number) => {
                error: "No access token",
            };
        }
-       const res = await fetch(`http://localhost:8017/v1/admins/orders/revenue?month=${month}&year=2026`, {
+       const res = await fetch(`${BE_URL}/v1/admins/orders/revenue?month=${month}&year=2026`, {
            method: "GET",
            headers: {
                "Content-Type": "application/json",
