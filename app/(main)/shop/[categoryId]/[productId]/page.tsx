@@ -1,5 +1,4 @@
 // app/shop/[categoryId]/[productId]/page.tsx
-import { categoryLabels } from '@/lib/mockData';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import StarRating from '@/components/StarRating/StarRating';
@@ -14,9 +13,10 @@ interface Props {
 export default async function ProductPage({ params }: Props) {
     const { categoryId, productId } = await params;
     const category = await getCategoryBySlug(categoryId).then(res=> res.data);
+
     const products = await getProductsByCategory(categoryId).then(res => res.data);
     const product = products.find((p: IProducts) => p._id === productId);
-    console.log(product)
+
     if (!product) notFound();
     if (product.categoryId !== category._id) notFound();
     return (
@@ -28,8 +28,21 @@ export default async function ProductPage({ params }: Props) {
             }}
         >
             {/* LEFT */}
-            <div style={{ flexShrink: 0 }}>
-                <Image src={product.image} alt={product.name} width={500} height={500} style={{ objectFit: 'cover' }} />
+            <div
+                style={{
+                    width: 500,
+                    height: 500,
+                    position: 'relative',
+                    flexShrink: 0,
+                    overflow: 'hidden',
+                }}
+            >
+                <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    style={{ objectFit: 'cover' }}
+                />
             </div>
 
             {/* RIGHT */}
@@ -41,7 +54,7 @@ export default async function ProductPage({ params }: Props) {
                 }}
             >
                 <h2 style={{ fontSize: '12px', color: '#f97316', fontWeight: 600, textTransform: 'uppercase' }}>
-                    {categoryLabels[product.category]}
+                    {category.name}
                 </h2>
                 <h1 style={{ fontSize: '28px', fontWeight: 'bold', marginTop: '8px' }}>{product.name}</h1>
                 <div style={{ marginTop: '8px' }}>

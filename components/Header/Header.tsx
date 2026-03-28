@@ -1,20 +1,12 @@
-'use client';
 
-import {useEffect, useState} from 'react';
 import { Heart, ShoppingBag, User } from 'lucide-react';
 import { ChevronRight } from '@/components/animate-ui/icons/chevron-right';
 import { ChevronLeft } from '@/components/animate-ui/icons/chevron-left';
 import Image from 'next/image';
-import {
-    NavigationMenu,
-    NavigationMenuContent,
-    NavigationMenuItem,
-    NavigationMenuLink,
-    NavigationMenuList,
-    NavigationMenuTrigger,
-} from '@/components/ui/navigation-menu';
 import Link from 'next/link';
 import {BE_URL} from "@/lib/constants";
+import Nav from "@/components/Nav/Nav";
+import {cookies} from "next/headers";
 
 interface ICategories{
     _id: string;
@@ -22,22 +14,42 @@ interface ICategories{
     slug: string;
 }
 
-export default function Header({categories}:{categories: ICategories[]}) {
+const getMe = async () => {
+    const cookieStore = await cookies();
+    const accessToken = cookieStore.get("access_token")?.value;
+    if (!accessToken) {
+        return {
+            success: false,
+            error: "No access token",
+        };
+    }
 
-    const [activeNav, setActiveNav] = useState('SHOP');
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const res = await fetch(`${BE_URL}/v1/users/me`, {
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+        },
+        cache: "no-store",
+    });
 
-    useEffect(() => {
-        fetch(`${BE_URL}/v1/users/me`, {
-            method: 'GET',
-            credentials: 'include',
-        })
-            .then(res => res.ok ? res.json() : null)
-            .then(data => {
-                console.log(data)
-                setIsLoggedIn(!!data);
-            });
-    }, []);
+    const data = await res.json();
+    if (!res.ok) {
+        return {
+            success: false,
+            error: data.message || "Update failed",
+        };
+    }
+    return data;
+}
+
+
+export default async function Header({categories}:{categories: ICategories[]}) {
+
+    let isLoggedIn = false;
+    const user = await getMe()
+
+
+
     return (
         <header className="bg-white border-b border-[#f0e8e1] px-4 pt-4">
             {/* Announcement Bar */}
@@ -106,87 +118,7 @@ export default function Header({categories}:{categories: ICategories[]}) {
             </div>
 
             {/* Nav */}
-            <nav className="bg-[#ffe7db]">
-                <div className="max-w-6xl mx-auto px-4 flex items-center justify-center py-1">
-                    <NavigationMenu>
-                        <NavigationMenuList className="gap-6">
-                            {/* HOME */}
-                            <NavigationMenuItem>
-                                <NavigationMenuLink
-                                    href="/"
-                                    className={`text-sm font-semibold tracking-widest transition-colors cursor-pointer bg-transparent hover:bg-transparent focus:bg-transparent
-              ${
-                  activeNav === 'HOME'
-                      ? 'text-[#e45001] border-b-2 border-[#e45001] pb-0.5'
-                      : 'text-[#664c3f] hover:text-[#e45001]'
-              }`}
-                                    onClick={() => setActiveNav('HOME')}
-                                >
-                                    HOME
-                                </NavigationMenuLink>
-                            </NavigationMenuItem>
-
-                            {/* ABOUT US */}
-                            <NavigationMenuItem>
-                                <NavigationMenuLink
-                                    href="/about"
-                                    className={`text-sm font-semibold tracking-widest transition-colors cursor-pointer bg-transparent hover:bg-transparent focus:bg-transparent
-              ${
-                  activeNav === 'ABOUT US'
-                      ? 'text-[#e45001] border-b-2 border-[#e45001] pb-0.5'
-                      : 'text-[#664c3f] hover:text-[#e45001]'
-              }`}
-                                    onClick={() => setActiveNav('ABOUT US')}
-                                >
-                                    ABOUT US
-                                </NavigationMenuLink>
-                            </NavigationMenuItem>
-
-                            {/* SHOP — có dropdown */}
-                            <NavigationMenuItem>
-                                <NavigationMenuTrigger
-                                    className={` text-sm font-semibold tracking-widest transition-colors cursor-pointer bg-transparent hover:bg-[#ffd0b8] focus:bg-transparent data-[state=open]:bg-transparent
-      `}
-                                    onClick={() => setActiveNav('SHOP')}
-                                >
-                                    SHOP
-                                </NavigationMenuTrigger>
-
-                                <NavigationMenuContent className="bg- border border-[#f0e0d6] shadow-lg rounded-md">
-                                    <ul className="w-48 p-2">
-                                        {categories.map((cat) => (
-                                            <li key={cat.slug}>
-                                                <NavigationMenuLink
-                                                    href={`/shop/${cat.slug}`}
-                                                    className="block px-3 py-2 text-sm text-[#ffd0b8] rounded hover:bg-[#fff1eb] hover:text-[#e45001] transition-colors"
-                                                >
-                                                    {cat.name}
-                                                </NavigationMenuLink>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </NavigationMenuContent>
-                            </NavigationMenuItem>
-
-                            {/* SUPPORT */}
-                            <NavigationMenuItem>
-                                <NavigationMenuLink
-                                    href="/support"
-                                    className={`text-sm font-semibold tracking-widest transition-colors cursor-pointer bg-transparent hover:bg-transparent focus:bg-transparent
-              ${
-                  activeNav === 'SUPPORT'
-                      ? 'text-[#e45001] border-b-2 border-[#e45001] pb-0.5'
-                      : 'text-[#664c3f] hover:text-[#e45001]'
-              }`}
-                                    onClick={() => setActiveNav('SUPPORT')}
-                                >
-                                    SUPPORT
-                                </NavigationMenuLink>
-                            </NavigationMenuItem>
-                        </NavigationMenuList>
-                    </NavigationMenu>
-                </div>
-            </nav>
+           <Nav categories={categories}/>
         </header>
     );
 }

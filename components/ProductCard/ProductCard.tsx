@@ -13,7 +13,7 @@ export interface IProducts{
     image: string;
 }
 
-export default function ProductCard({ product, categorySlug }: { product: IProducts, categorySlug: string }) {
+export default function ProductCard({ product, categorySlug, categoryName }: { product: IProducts, categorySlug: string, categoryName: string }) {
     const [wished, setWished] = useState(false);
     const [added, setAdded] = useState(false);
 
@@ -45,7 +45,7 @@ export default function ProductCard({ product, categorySlug }: { product: IProdu
                 </button>
 
                 {/* Image */}
-                <div className="relative bg-[#faf7f4] overflow-hidden">
+                <div className="relative bg-[#faf7f4] overflow-hidden aspect-square">
                     <img
                         src={product.image}
                         alt={product.name}
@@ -55,7 +55,7 @@ export default function ProductCard({ product, categorySlug }: { product: IProdu
 
                 {/* Info */}
                 <div className="p-3">
-                    <p className="text-[10px] font-semibold tracking-widest text-[#e8590c] mb-1">{categorySlug}</p>
+                    <p className="text-[10px] font-semibold tracking-widest text-[#e8590c] mb-1 uppercase">{categoryName}</p>
                     <h3 className="text-[1rem] text-[#573727] font-bold leading-snug mb-2 min-h-[2.5rem]">
                         {product.name}
                     </h3>
