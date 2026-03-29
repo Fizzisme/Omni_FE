@@ -39,7 +39,7 @@ export default function SignUpPage() {
         setLoading(true);
 
         try {
-            const result = await signUpAction(email,password);
+            const result = await signUpAction({email,password});
 
             if (!result.success) {
                 setError(result.error ?? "Something went wrong");

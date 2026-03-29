@@ -88,7 +88,7 @@ export async function verifyCodeAction(code: string) {
     }
 }
 
-export async function signUpAction(email: string,password: string) {
+export async function signUpAction({email,password}:{email: string, password: string}) {
     try {
         const res = await fetch(`${BE_URL}/v1/auth/sign-up`, {
             method: "POST",
