@@ -108,7 +108,6 @@ export async function signUpAction(email: string,password: string) {
             };
         }
 
-        cookieStore.delete("otp_token");
 
         return { success: true };
     } catch {

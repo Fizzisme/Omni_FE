@@ -43,12 +43,8 @@ export default function SignUpPage() {
 
             if (!result.success) {
                 setError(result.error ?? "Something went wrong");
-            } else {
-                alert("Verification code sent! Check your email.");
-                router.push(
-                    `/sign-up/verify?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
-                );
             }
+            router.push("/sign-in");
         } catch {
             setError("Something went wrong");
         } finally {
