@@ -105,7 +105,7 @@ export default async function AdminDashboard({
 
                                 <td className="p-0">
                                     <Link href={`/admin/orders/${o._id}`} className="block p-2 w-full h-full">
-                                        {o.aiAnalyst.fraud}
+                                        {o.aiAnalyst.fraud === 1 ? "YES" : "NO"}
                                     </Link>
                                 </td>
 

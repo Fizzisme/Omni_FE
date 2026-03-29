@@ -24,6 +24,7 @@ export default async function OrderPage({ params }: Props) {
     const {orderId} = await params;
 
     const order = await getOrder(orderId).then(res => res.data);
+    console.log(order)
 
     return (
         <div className="flex-1 bg-[#f7f4ef] p-6">
@@ -164,7 +165,7 @@ export default async function OrderPage({ params }: Props) {
                     <div className="grid grid-cols-3 gap-4">
                         <div className="p-4 border rounded">
                             <p className="text-sm text-gray-500">Fraud</p>
-                            <p className="font-bold">{order.aiAnalyst.fraud}</p>
+                            <p className="font-bold">{order.aiAnalyst.fraud === 1 ? 'YES' : 'NO'}</p>
                         </div>
 
                         <div className="p-4 border rounded">

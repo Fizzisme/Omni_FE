@@ -319,14 +319,27 @@ export default function CheckOutClient({ initialUser }: any) {
         };
 
         try {
-            await createOrder(payload);
+            const result = await createOrder(payload);
+            console.log(result);
 
-            alert("Order success 🎉");
+            const aiAnalyst = result.data.aiAnalyst;
 
-            localStorage.removeItem("cart");
-            localStorage.removeItem("checkout");
+            if(aiAnalyst.fraud === 0) {
+                alert("Order success 🎉");
+                localStorage.removeItem("cart");
+                localStorage.removeItem("checkout");
 
-            router.push("/success");
+                router.push("/success");
+            }
+            else {
+                alert("Order is pending");
+                localStorage.removeItem("cart");
+                localStorage.removeItem("checkout");
+                router.push("/pending");
+            }
+
+
+
         } catch (e) {
             console.error("ERROR:", e);
             alert("Order failed ❌");
