@@ -6,6 +6,7 @@ import {
     NavigationMenuList, NavigationMenuTrigger
 } from "@/components/ui/navigation-menu";
 import {useState} from "react";
+import Link from "next/link";
 
 interface ICategories{
     _id: string;
@@ -58,10 +59,10 @@ export default function Nav ({categories}:{categories: ICategories[]}) {
       `}
                               onClick={() => setActiveNav('SHOP')}
                           >
-                              SHOP
+                              <Link href="/shop">SHOP</Link>
                           </NavigationMenuTrigger>
 
-                          <NavigationMenuContent className="bg- border border-[#f0e0d6] shadow-lg rounded-md">
+                          <NavigationMenuContent className="bg- border border-[#f0e0d6] shadow-lg rounded-md relative">
                               <ul className="w-48 p-2">
                                   {categories.map((cat) => (
                                       <li key={cat.slug}>

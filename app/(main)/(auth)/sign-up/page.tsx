@@ -1,10 +1,14 @@
+
 'use client'
 import { useState } from "react";
-import {sendVerifyCodeAction} from "@/app/(main)/(auth)/sign-up/action";
+import {signUpAction} from "@/app/(main)/(auth)/sign-up/action";
 import {useRouter} from "next/navigation";
 
 export default function SignUpPage() {
     const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
 
@@ -15,16 +19,35 @@ export default function SignUpPage() {
             setError("Please enter your email.");
             return;
         }
+
+        if (!password) {
+            setError("Please enter your password.");
+            return;
+        }
+
+        if (password.length < 6) {
+            setError("Password must be at least 6 characters.");
+            return;
+        }
+
+        if (password !== confirmPassword) {
+            setError("Passwords do not match.");
+            return;
+        }
+
         setError("");
         setLoading(true);
+
         try {
-            const result = await sendVerifyCodeAction(email);
+            const result = await signUpAction(email,password);
 
             if (!result.success) {
                 setError(result.error ?? "Something went wrong");
             } else {
                 alert("Verification code sent! Check your email.");
-                router.push(`/sign-up/verify?email=${encodeURIComponent(email)}`);
+                router.push(
+                    `/sign-up/verify?email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}`
+                );
             }
         } catch {
             setError("Something went wrong");
@@ -45,30 +68,38 @@ export default function SignUpPage() {
                 </div>
 
                 <div style={styles.infoBox}>
-                    Please enter your email. Omnicart will send a verification code to your email.
+                    Create your account. We will send a verification code to your email.
                 </div>
 
+                {/* EMAIL */}
                 <div style={styles.inputWrapper}>
-                    <svg
-                        width="18"
-                        height="18"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="#bbb"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        style={{ flexShrink: 0 }}
-                    >
-                        <rect x="2" y="4" width="20" height="16" rx="2" />
-                        <path d="M22 7l-10 7L2 7" />
-                    </svg>
                     <input
                         type="email"
                         placeholder="Enter your email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+                        style={styles.input}
+                    />
+                </div>
+
+                {/* PASSWORD */}
+                <div style={styles.inputWrapper}>
+                    <input
+                        type="password"
+                        placeholder="Enter password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        style={styles.input}
+                    />
+                </div>
+
+                {/* CONFIRM PASSWORD */}
+                <div style={styles.inputWrapper}>
+                    <input
+                        type="password"
+                        placeholder="Confirm password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                         style={styles.input}
                     />
                 </div>
@@ -84,7 +115,7 @@ export default function SignUpPage() {
                         cursor: loading ? "not-allowed" : "pointer",
                     }}
                 >
-                    {loading ? "SENDING..." : "SEND VERIFICATION CODE"}
+                    {loading ? "SENDING..." : "CREATE ACCOUNT"}
                 </button>
             </div>
         </div>
@@ -163,7 +194,7 @@ const styles = {
         display: "flex",
         alignItems: "center",
         borderBottom: "1.5px solid #ccc",
-        marginBottom: 8,
+        marginBottom: 12,
         paddingBottom: 8,
         gap: 10,
     },

@@ -21,6 +21,7 @@ export default function UserInfoClient({ initialUser }: any) {
         setEditing(false);
         router.refresh();
     };
+    console.log(user.firstName)
 
     return (
 
@@ -34,10 +35,9 @@ export default function UserInfoClient({ initialUser }: any) {
                 <div className="p-6 -mt-12">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-4">
-                            <img
-                                src={user.avatar || 'https://i.pravatar.cc/100'}
-                                className="w-20 h-20 rounded-full border-4 border-white shadow"
-                            />
+                            <div className="w-20 h-20 rounded-full border-4 border-white shadow bg-gradient-to-br from-[#ff9a75] to-[#ff5c2b] flex items-center justify-center text-white text-2xl font-bold">
+                                {user.firstName.charAt(0)?.toUpperCase() || "U"}
+                            </div>
                             <div>
                                 <h2 className="text-lg font-bold text-[#3e2c23]">
                                     {user.name}

@@ -55,12 +55,10 @@ export default function CartPage() {
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     const handleCheckOut = () => {
-        const existing = localStorage.getItem("checkout");
 
-        if (!existing) {
             const checkout = { cart, total };
             localStorage.setItem("checkout", JSON.stringify(checkout));
-        }
+
 
         router.push("/checkout");
     }

@@ -88,25 +88,14 @@ export async function verifyCodeAction(code: string) {
     }
 }
 
-export async function signUpAction(password: string) {
+export async function signUpAction(email: string,password: string) {
     try {
-        const cookieStore = await cookies();
-        const otpToken = cookieStore.get("otp_token")?.value;
-
-        if (!otpToken) {
-            return {
-                success: false,
-                error: "OTP token not found. Please verify again.",
-            };
-        }
-
         const res = await fetch(`${BE_URL}/v1/auth/sign-up`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Cookie: `otp_token=${otpToken}`,
             },
-            body: JSON.stringify({ password }),
+            body: JSON.stringify({ email,password }),
             cache: "no-store",
         });
 
