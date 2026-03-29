@@ -18,7 +18,6 @@ export default async function AdminLayout({children}: {children: React.ReactNode
         <h2 className="text-xl font-bold mb-6">ADMIN</h2>
         <nav className="flex flex-col gap-4 text-sm">
           <Link href={'/admin/dash-board'} className="cursor-pointer">Dashboard</Link>
-          <span className="cursor-pointer">Orders</span>
         </nav>
       </aside>
         {children}

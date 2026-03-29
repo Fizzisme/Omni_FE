@@ -10,6 +10,7 @@ export default function UserLayout({ children }: { children: React.ReactNode }) 
     const menu = [
         { name: 'My Info', href: '/user/info' },
         { name: 'My Orders', href: '/user/orders' },
+        { name: 'Home', href: '/shop' },
     ];
 
     return (

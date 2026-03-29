@@ -14,7 +14,7 @@ interface ICategories{
     slug: string;
 }
 
-const getMe = async () => {
+export const getMe = async () => {
     const cookieStore = await cookies();
     const accessToken = cookieStore.get("access_token")?.value;
     if (!accessToken) {
@@ -47,8 +47,9 @@ export default async function Header({categories}:{categories: ICategories[]}) {
 
     let isLoggedIn = false;
     const user = await getMe()
-
-
+    if(user?.data?._id)  {
+        isLoggedIn = true;
+    }
 
     return (
         <header className="bg-white border-b border-[#f0e8e1] px-4 pt-4">

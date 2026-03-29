@@ -31,7 +31,7 @@ export default function AddToCartButton({ product }: { product: any }) {
             {/* Button */}
             <button
                 onClick={handleAdd}
-                className="bg-[#fed7aa] text-[#c2410c] px-6 py-3 rounded-full font-semibold"
+                className="bg-[#fed7aa] text-[#c2410c] px-6 py-3 rounded-full font-semibold cursor-pointer"
             >
                 ADD TO CART
             </button>
