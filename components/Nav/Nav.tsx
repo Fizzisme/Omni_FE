@@ -70,7 +70,7 @@ export default function Nav ({categories}:{categories: ICategories[]}) {
                                               href={`/shop/${cat.slug}`}
                                               className="block px-3 py-2 text-sm text-[#ff5c2b] rounded hover:bg-[#fff1eb] hover:text-[#e45001] transition-colors"
                                           >
-                                              {cat.name}
+                                              {cat.name.toUpperCase()}
                                           </NavigationMenuLink>
                                       </li>
                                   ))}
