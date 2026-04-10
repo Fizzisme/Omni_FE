@@ -46,3 +46,45 @@ export async function updateOrderStatus(id: string, status: string) {
         };
     }
 }
+
+
+export async function getUser(id: string) {
+   try{
+       const cookieStore = await cookies();
+       const accessToken = cookieStore.get("access_token_admin")?.value;
+
+
+       if (!accessToken) {
+           return {
+               success: false,
+               error: "No access token",
+           };
+       }
+       console.log(accessToken)
+       const res = await fetch(`${BE_URL}/v1/admins/users/${id}`, {
+           method: "GET",
+           headers: {
+               "Content-Type": "application/json",
+               Authorization: `Bearer ${accessToken}`,
+           },
+           cache: "no-store",
+       });
+
+
+       const data = await res.json();
+       if (!res.ok) {
+           return {
+               success: false,
+               error: data.message || "Update failed",
+           };
+       }
+       return data.data;
+   }
+    catch (error) {
+        console.error("❌ ERROR:", error);
+        return {
+            success: false,
+            error: "Cannot connect to server",
+        };
+    }
+}

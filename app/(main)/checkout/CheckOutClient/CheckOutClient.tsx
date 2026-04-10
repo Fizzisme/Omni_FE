@@ -261,14 +261,13 @@ function Field({
 
 const PAYMENT_METHODS = ["Credit Card", "Debit Card", "Bank Transfer", "Pay Pal"] as const;
 export default function CheckOutClient({ initialUser }: any) {
-
     const [form, setForm] = useState({
         email: initialUser?.email || "",
         firstName: initialUser?.firstName || "",
         lastName:  initialUser?.lastName || "",
         age:  initialUser?.age || "",
         address:  initialUser?.address || "",
-        phone:   initialUser?.phone || "",
+        phone:   initialUser?.phoneNumber || "",
         cardName:  "",
         cardNumber: "",
         expiry: "",
@@ -475,8 +474,8 @@ export default function CheckOutClient({ initialUser }: any) {
                             <div style={s.payHint}>
                                 <p>Transfer to:</p>
                                 <p><b>Bank:</b> Vietcombank</p>
-                                <p><b>Account:</b> 123456789</p>
-                                <p><b>Name:</b> Your Store</p>
+                                <p><b>Account:</b> 1041752693</p>
+                                <p><b>Name:</b> Omni Store</p>
                             </div>
                         )}
 

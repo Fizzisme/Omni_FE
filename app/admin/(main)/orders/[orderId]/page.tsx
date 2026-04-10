@@ -1,7 +1,7 @@
 // app/admin/orders/[id]/page.tsx
 
 import Image from "next/image";
-import {updateOrderStatus} from "@/app/admin/(main)/orders/[orderId]/action";
+import {getUser, updateOrderStatus} from "@/app/admin/(main)/orders/[orderId]/action";
 import {BE_URL} from "@/lib/constants";
 
 async function getOrder(id: string) {
@@ -16,6 +16,9 @@ async function getOrder(id: string) {
     return res.json();
 }
 
+
+
+
 interface Props {
     params: Promise<{ orderId: string }>;
 }
@@ -24,8 +27,9 @@ export default async function OrderPage({ params }: Props) {
     const {orderId} = await params;
 
     const order = await getOrder(orderId).then(res => res.data);
-    console.log(order)
 
+    const user = await getUser(order.userId);
+    console.log(user)
     return (
         <div className="flex-1 bg-[#f7f4ef] p-6">
             <div className="max-w-5xl mx-auto bg-white p-6 rounded-xl border">
@@ -99,12 +103,12 @@ export default async function OrderPage({ params }: Props) {
                 {/* CUSTOMER */}
                 <div className="mb-6">
                     <h2 className="font-medium mb-2">Customer Info</h2>
-                    <p>Email: {order.customer?.email}</p>
+                    <p>Email: {user?.email}</p>
                     <p>
-                        Name: {order.customer?.firstName} {order.customer?.lastName}
+                        Name: {user?.firstName} {user?.lastName}
                     </p>
-                    <p>Phone: {order.customer?.phone}</p>
-                    <p>Address: {order.customer?.address}</p>
+                    <p>Phone: {user?.phone}</p>
+                    <p>Address: {user?.address}</p>
                 </div>
 
                 {/* ITEMS */}
