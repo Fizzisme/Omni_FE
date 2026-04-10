@@ -107,7 +107,7 @@ export default async function OrderPage({ params }: Props) {
                     <p>
                         Name: {user?.firstName} {user?.lastName}
                     </p>
-                    <p>Phone: {user?.phone}</p>
+                    <p>Phone: {user?.phoneNumber}</p>
                     <p>Address: {user?.address}</p>
                 </div>
 
